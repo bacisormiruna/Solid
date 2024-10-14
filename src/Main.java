@@ -1,8 +1,5 @@
 import bad.*;
-import good.GoodInvoicePrinter;
-import good.GoodInvoicePrinter_I;
-import good.SomeOtherGoodInvoicePrinter;
-import good.SomeOtherGoodInvoicePrinter_I;
+import good.*;
 import invoice.ComplexInvoice;
 import invoice.Invoice;
 
@@ -10,38 +7,29 @@ import java.util.Date;
 
 public class Main {
     public static void main(String[] args) {
-        testBadI();
-        testGoodI();
+//        testBadD();
+        testGoodD();
     }
 
-    private static void testBadI() {
-        Invoice invoice = new Invoice(-132523);
-        ComplexInvoice complexInvoice = new ComplexInvoice(21439, new Date());
+    private static void testBadD() {
+        Invoice invoice = new Invoice(665);
 
-        BadInvoicePrinter_I badInvoicePrinter = new BadInvoicePrinter();
-        badInvoicePrinter.print(invoice);
-        badInvoicePrinter.printComplexInvoice(complexInvoice);
-        badInvoicePrinter.someOtherPrintMethod(invoice); //why should I be able to do this?
+        BadPrintingService badPrintingService = new BadPrintingService();
+        badPrintingService.print(invoice);
 
-        BadInvoicePrinter_I someOtherBadInvoicePrinter = new SomeOtherBadInvoicePrinter();
-        someOtherBadInvoicePrinter.print(invoice); //why should I be able to do this?
-        someOtherBadInvoicePrinter.printComplexInvoice(complexInvoice); //why should I be able to do this?
-        someOtherBadInvoicePrinter.someOtherPrintMethod(invoice);
+        // now what?
+        // badPrintingService = new BadPrintingService(new HtmlInvoicePrinter()); // but why!?
     }
 
-    private static void testGoodI() {
-        Invoice invoice = new Invoice(423);
-        ComplexInvoice complexInvoice = new ComplexInvoice(242, new Date());
+    private static void testGoodD() {
+        Invoice invoice = new Invoice(665);
 
-        GoodInvoicePrinter_I goodInvoicePrinter = new GoodInvoicePrinter();
-        goodInvoicePrinter.print(invoice);
-        goodInvoicePrinter.printComplexInvoice(complexInvoice);
-        // goodInvoicePrinter.someOtherPrintMethod(invoice); // unavailable! great.
+        GoodPrintingService goodPrintingService = new GoodPrintingService(
+                new GoodInvoicePrinter());
+        goodPrintingService.print(invoice);
 
-
-        SomeOtherGoodInvoicePrinter_I someOtherGoodInvoicePrinter = new SomeOtherGoodInvoicePrinter();
-        // other 2 methods are unavailable
-        someOtherGoodInvoicePrinter.someOtherPrintMethod(invoice);
+        goodPrintingService = new GoodPrintingService(new HtmlInvoicePrinter());
+        goodPrintingService.print(invoice);
     }
 
 }
