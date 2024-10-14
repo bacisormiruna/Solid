@@ -1,31 +1,26 @@
-import bad.AnotherBadClient;
-import bad.BadClient;
-import bad.BadEmployee;
-import bad.BadServer;
+import bad.*;
 import good.*;
 
 public class Main {
     public static void main(String[] args) {
-        testBadO();
-        testGoodO();
+        testBadL();
+        testGoodL();
     }
 
-    private static void testBadO() {
-        BadClient client = new BadClient();
-        BadServer server = new BadServer();
-        server.reactToClient(client);
-
-        AnotherBadClient anotherBadClient = new AnotherBadClient();
-//        server.reactToClient(anotherBadClient);
+    private static void testBadL() {
+        BadRectangle actuallySquare = new BadSquare(20, 30);
+        BadGraphicsService badGraphicsService = new BadGraphicsService();
+        badGraphicsService.checkForArea(actuallySquare);
     }
 
-    private static void testGoodO() {
-        Client_I client = new GoodClient();
-        GoodServer server = new GoodServer();
-        server.reactToClient(client);
+    private static void testGoodL() {
+        Shape rectangle = new GoodRectangle(29, 40);
+        Shape square = new GoodSquare(20);
+        GoodGraphicsService goodGraphicsService = new GoodGraphicsService();
 
-        AnotherGoodClient anotherGoodClient = new AnotherGoodClient();
-        server.reactToClient(anotherGoodClient);
+        goodGraphicsService.checkForArea(rectangle);
+        goodGraphicsService.checkForArea(square);
+
     }
 
 }
